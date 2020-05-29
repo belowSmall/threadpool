@@ -123,17 +123,29 @@ int condition_destroy(condition_t *cond) {
 ```
 
 #### 2.任务、线程池的封装
+
 任务：
+
 run 执行的任务
+
 arg 任务参数
+
 next 值向下一个任务
+
 线程池：
+
 ready 操作时要锁住线程池
+
 first 任务队列的第一个任务
+
 last 任务队列的最后一个任务
+
 counter 线程池中已有的线程数
+
 idle 线程池中空闲线程数
+
 max_threads 线程池中最大线程数
+
 quit 是否退出的标志
 
 ```c
@@ -222,7 +234,9 @@ void threadpool_add_task(threadpool_t *pool, void *(*run)(void *), void *arg) {
 **3.重点：创建的线程**
 
 每次操作线程池之前必须加锁！！
+
 while (pool->first == NULL && !pool->quit)这个是用来判断超时的
+
 然后在任务队列中取出第一个任务，执行任务处理函数。（由于执行任务可能耗时较多，这里需要释放锁）
 
 ```c
